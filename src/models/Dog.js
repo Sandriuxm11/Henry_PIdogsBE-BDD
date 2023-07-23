@@ -28,6 +28,10 @@ module.exports = (sequelize) => {
     años_de_vida: {
       type: DataTypes.DECIMAL,
     },
+    created:{
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    }
   },{
     timestamps: false,
   });
