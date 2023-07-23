@@ -4,38 +4,23 @@ const getRazaByName = require("../controllers/02-getRazaByName");
 const createNewDog = require("../controllers/04-createNewDog");
 
 const allDogsHandler = (req, res) => {
-    try {
-        const allDogs = getAllDogs();
+    const {name} = req.query;
 
-        // if(!allDogs) throw Error ("No hay perros existentes");
-        res.status(200).json(allDogs);
-    } 
-
-    catch (error) {
-        res.status(404).json({error: error.message});
+    if(name !== undefined) res.status(200).send(`NIY: TRAE TODA LA INFORMACIÓN DEL PERRO ${name}`);
+    else {res.status(200).send("NIY: TRAE LA INFORMACIÓN DE TODOS LOS PERROS")};
     }
-    // res.status(200).send("Obtiene todas las razas de los perros");
-};
+    // try {
+    //     const allDogs = getAllDogs();
 
-const dogsByNameHandler = (req, res)=>{
-    // Esta ruta debe obtener todas aquellas razas de perros que coinciden con el nombre recibido por query. (No es necesario que sea una coincidencia exacta).
-    // Debe poder buscarlo independientemente de mayúsculas o minúsculas.
-    // Si no existe la raza, debe mostrar un mensaje adecuado.
-    // Debe buscar tanto los de la API como los de la base de datos.
-    
-        const { name } = req.query;
-    
-        try {
-            const raza = getRazaByName(name);
-            res.status(200).json(raza);
-        } 
-        catch (error) {
-            res.status(404).json({error: error.message});
-        }
-    
-    
-        res.status(200).send("Obtiene la raza por nombre buscado");
-    };
+    //     // if(!allDogs) throw Error ("No hay perros existentes");
+    //     res.status(200).json(allDogs);
+    // } 
+
+    // catch (error) {
+    //     res.status(404).json({error: error.message});
+    // }
+    // res.status(200).send("Obtiene todas las razas de los perros");
+// };
 
 const dogsByIdHandler = (req, res)=>{
     // Esta ruta obtiene el detalle de una raza específica. Es decir que devuelve un objeto con la información pedida en el detalle de un perro.
@@ -43,17 +28,18 @@ const dogsByIdHandler = (req, res)=>{
     // Tiene que incluir los datos de los temperamentos asociadas a esta raza.
     // Debe funcionar tanto para los perros de la API como para los de la base de datos.
         const {id} = req.params;
+        res.status(200).send(`NIY: RECIBO EL DETALLE DE LOS PERROS DE ACUERDO AL ID ${id}`);
     
         // if(!id) throw Error ("NO EXISTE EL ID BUSCADO");
     
         // else {
-            try {
-                const dog = getDogById(id);
-                res.status(200).json(dog);
-            } 
-            catch (error) {
-                res.status(404).json({error: error.message});
-            }
+            // try {
+            //     const dog = getDogById(id);
+            //     res.status(200).json(dog);
+            // } 
+            // catch (error) {
+            //     res.status(404).json({error: error.message});
+            // }
         // }
     };
 
@@ -72,4 +58,4 @@ const createNewDogHandler = (req, res)=>{
         }
     };
 
-module.exports = {allDogsHandler, dogsByNameHandler, dogsByIdHandler, createNewDogHandler};
+module.exports = {allDogsHandler, dogsByIdHandler, createNewDogHandler};
