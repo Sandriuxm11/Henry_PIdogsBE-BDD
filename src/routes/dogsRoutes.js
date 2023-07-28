@@ -1,8 +1,8 @@
 const { Router } = require('express');
-const {allDogsHandler, dogsByNameHandler, dogsByIdHandler, createNewDogHandler} = require("../Handlers/dogsHandlers");
+const {dogsHandler, dogsByIdHandler, createNewDogHandler} = require("../Handlers/dogsHandlers");
 const dogsRoutes = Router();
 
-dogsRoutes.get("/", allDogsHandler);
+dogsRoutes.get("/", dogsHandler);
 
 dogsRoutes.get("/:id", dogsByIdHandler);
 

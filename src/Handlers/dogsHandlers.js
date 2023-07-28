@@ -3,7 +3,13 @@ const getDogById = require("../controllers/03-getDogById");
 const getRazaByName = require("../controllers/02-getRazaByName");
 const createNewDog = require("../controllers/04-createNewDog");
 
-const allDogsHandler = (req, res) => {
+const dogsHandler = (req, res) => {
+    // Obtiene un arreglo de objetos, donde cada objeto es la raza de un perro
+    // Esta ruta debe obtener todas aquellas razas de perros que coinciden con el nombre recibido por query. (No es necesario que sea una coincidencia exacta).
+    // Debe poder buscarlo independientemente de mayúsculas o minúsculas.
+    // Si no existe la raza, debe mostrar un mensaje adecuado.
+    // Debe buscar tanto los de la API como los de la base de datos.
+    
     const {name} = req.query;
 
     if(name !== undefined) res.status(200).send(`NIY: TRAE TODA LA INFORMACIÓN DEL PERRO ${name}`);
@@ -45,19 +51,10 @@ const dogsByIdHandler = (req, res)=>{
 
 const createNewDogHandler = async (req, res)=>{
     // Esta ruta recibirá todos los datos necesarios para crear un nuevo perro y relacionarlo con los temperamentos asociados.
-    // Toda la información debe ser recibida por body.
     // Debe crear la raza de perro en la base de datos, y esta debe estar relacionada con los temperamentos indicados (al menos uno).
+    const {imagen, name, altura, peso, años_de_vida} = req.body;
         
-        // res.status(200).send(`NIY: ESTOY CREANDO UN NUEVO PERRO CON LOS SIGUIENTES DATOS:
-        // NOMBRE: ${name},
-        // IMAGEN: ${imagen},
-        // ALTURA: ${altura},
-        // PESO: ${peso},
-        // AÑOS DE VIDA: ${años_de_vida},
-        // `)
-    
         try {
-            const {imagen, name, altura, peso, años_de_vida} = req.body;
             const newDog = await createNewDog(imagen, name, altura, peso, años_de_vida);
             res.status(201).json(newDog);
         } 
@@ -66,4 +63,4 @@ const createNewDogHandler = async (req, res)=>{
         }
     };
 
-module.exports = {allDogsHandler, dogsByIdHandler, createNewDogHandler};
+module.exports = {dogsHandler, dogsByIdHandler, createNewDogHandler};
