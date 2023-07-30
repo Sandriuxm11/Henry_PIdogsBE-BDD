@@ -3,7 +3,7 @@ const getDogById = require("../controllers/03-getDogById");
 const getRazaByName = require("../controllers/02-getRazaByName");
 const createNewDog = require("../controllers/04-createNewDog");
 
-const dogsHandler = (req, res) => {
+const dogsHandler = async (req, res) => {
     // Obtiene un arreglo de objetos, donde cada objeto es la raza de un perro
     // Esta ruta debe obtener todas aquellas razas de perros que coinciden con el nombre recibido por query. (No es necesario que sea una coincidencia exacta).
     // Debe poder buscarlo independientemente de mayúsculas o minúsculas.
@@ -12,41 +12,29 @@ const dogsHandler = (req, res) => {
     
     const {name} = req.query;
 
-    if(name !== undefined) res.status(200).send(`NIY: TRAE TODA LA INFORMACIÓN DEL PERRO ${name}`);
-    else {res.status(200).send("NIY: TRAE LA INFORMACIÓN DE TODOS LOS PERROS")};
+    try {
+        const resultados = !name ? await getAllDogs() :await getRazaByName(name);
+        res.status(200).json(resultados);        
+    } 
+    catch (error) {
+        res.status(400).json({error: error.message});
     }
-    // try {
-    //     const allDogs = getAllDogs();
 
-    //     // if(!allDogs) throw Error ("No hay perros existentes");
-    //     res.status(200).json(allDogs);
-    // } 
-
-    // catch (error) {
-    //     res.status(404).json({error: error.message});
-    // }
-    // res.status(200).send("Obtiene todas las razas de los perros");
-// };
-
-const dogsByIdHandler = (req, res)=>{
-    // Esta ruta obtiene el detalle de una raza específica. Es decir que devuelve un objeto con la información pedida en el detalle de un perro.
-    // La raza es recibida por parámetro (ID).
+    // if(name !== undefined) res.status(200).send(`NIY: TRAE TODA LA INFORMACIÓN DEL PERRO ${name}`);
+    // else {res.status(200).send("NIY: TRAE LA INFORMACIÓN DE TODOS LOS PERROS")};
+    }
+    
+const dogsByIdHandler = async (req, res)=>{
     // Tiene que incluir los datos de los temperamentos asociadas a esta raza.
-    // Debe funcionar tanto para los perros de la API como para los de la base de datos.
         const {id} = req.params;
-        res.status(200).send(`NIY: RECIBO EL DETALLE DE LOS PERROS DE ACUERDO AL ID ${id}`);
-    
-        // if(!id) throw Error ("NO EXISTE EL ID BUSCADO");
-    
-        // else {
-            // try {
-            //     const dog = getDogById(id);
-            //     res.status(200).json(dog);
-            // } 
-            // catch (error) {
-            //     res.status(404).json({error: error.message});
-            // }
-        // }
+        const source = isNaN(id) ? "bdd" : "api";
+        
+        try {
+            const dogById = await getDogById(id, source);
+            res.status(200).json(dogById);
+        } catch (error) {
+            res.status(400).json({error: error.message});
+        }
     };
 
 const createNewDogHandler = async (req, res)=>{
