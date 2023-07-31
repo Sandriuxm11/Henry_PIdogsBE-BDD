@@ -4,7 +4,7 @@ const getRazaByName = require("../controllers/02-getRazaByName");
 const createNewDog = require("../controllers/04-createNewDog");
 
 const dogsHandler = async (req, res) => {
-    // Obtiene un arreglo de objetos, donde cada objeto es la raza de un perro
+   
     // Esta ruta debe obtener todas aquellas razas de perros que coinciden con el nombre recibido por query. (No es necesario que sea una coincidencia exacta).
     // Debe poder buscarlo independientemente de mayúsculas o minúsculas.
     // Si no existe la raza, debe mostrar un mensaje adecuado.
@@ -12,27 +12,25 @@ const dogsHandler = async (req, res) => {
     
     const {name} = req.query;
 
-    try {
-        const resultados = !name ? await getAllDogs() :await getRazaByName(name);
-        res.status(200).json(resultados);        
-    } 
-    catch (error) {
-        res.status(400).json({error: error.message});
-    }
-
-    // if(name !== undefined) res.status(200).send(`NIY: TRAE TODA LA INFORMACIÓN DEL PERRO ${name}`);
-    // else {res.status(200).send("NIY: TRAE LA INFORMACIÓN DE TODOS LOS PERROS")};
+        try {
+            const resultados = !name ? await getAllDogs() : await getRazaByName(name);
+            res.status(200).json(resultados);        
+        } 
+        catch (error) {
+            res.status(400).json({error: error.message});
+        }
     }
     
 const dogsByIdHandler = async (req, res)=>{
     // Tiene que incluir los datos de los temperamentos asociadas a esta raza.
-        const {id} = req.params;
-        const source = isNaN(id) ? "bdd" : "api";
+    const {id} = req.params;
+    const source = isNaN(id) ? "bdd" : "api";
         
         try {
             const dogById = await getDogById(id, source);
             res.status(200).json(dogById);
-        } catch (error) {
+        } 
+        catch (error) {
             res.status(400).json({error: error.message});
         }
     };
