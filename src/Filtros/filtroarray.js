@@ -7,6 +7,7 @@ const arrayFiltrada = (arr) => {
             altura: elemento.height,
             peso: elemento.weight,
             años_de_vida: elemento.life_span,
+            Temperamento: elemento.temperament,
             created: false,
         }
     })

@@ -28,6 +28,9 @@ module.exports = (sequelize) => {
     años_de_vida: {
       type: DataTypes.DECIMAL,
     },
+    Temperamento:{
+      type: DataTypes.TEXT,
+    },
     created:{
       type: DataTypes.BOOLEAN,
       defaultValue: true,
