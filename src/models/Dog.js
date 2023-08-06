@@ -21,15 +21,15 @@ module.exports = (sequelize) => {
     },
     altura: {
       type: DataTypes.DECIMAL,
+      allowNull: false,
     },
     peso: {
       type: DataTypes.DECIMAL,
+      allowNull: false,
     },
     años_de_vida: {
       type: DataTypes.DECIMAL,
-    },
-    Temperamento:{
-      type: DataTypes.TEXT,
+      allowNull: false,
     },
     created:{
       type: DataTypes.BOOLEAN,

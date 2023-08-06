@@ -12,7 +12,7 @@ const getAllTemp = async () => {
     const apiDogsRaw = (await axios.get(URL)).data;
     const apiDogs = arrayFiltrada(apiDogsRaw);
 
-    let temperamentosAllDogs = apiDogs.map(dog => dog.Temperamento).map(dog => dog?.split(', '));
+    let temperamentosAllDogs = apiDogs.map(dog => dog.temperamento).map(dog => dog?.split(', '));
 
     let temperamentos = [...new Set(temperamentosAllDogs.flat())];
     
@@ -25,7 +25,6 @@ const getAllTemp = async () => {
         })}
     })
 
-    console.log(temperamentos);
     return await Temperament.findAll();
 };
 

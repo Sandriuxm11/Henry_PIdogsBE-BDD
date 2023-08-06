@@ -32,10 +32,10 @@ const dogsByIdHandler = async (req, res)=>{
 const createNewDogHandler = async (req, res)=>{
     // Esta ruta recibirá todos los datos necesarios para crear un nuevo perro y relacionarlo con los temperamentos asociados.
     // Debe crear la raza de perro en la base de datos, y esta debe estar relacionada con los temperamentos indicados (al menos uno).
-    const {imagen, name, altura, peso, años_de_vida} = req.body;
+    const {imagen, name, altura, peso, años_de_vida, temperamento} = req.body;
         
         try {
-            const newDog = await createNewDog(imagen, name, altura, peso, años_de_vida);
+            const newDog = await createNewDog({imagen, name, altura, peso, años_de_vida, temperamento});
             res.status(201).json(newDog);
         } 
         catch (error) {
